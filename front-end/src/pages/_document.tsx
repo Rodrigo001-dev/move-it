@@ -1,3 +1,7 @@
+// esse arquivo vai carregar uma unica vez numa visita do usuário na aplicação
+// nessa arquivo é colocado tudo que é estático de todas as telas da minha
+// aplicação, tudo o que todas as telas vão utilizar
+
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 
 export default class MyDocument extends Document {
@@ -11,6 +15,10 @@ export default class MyDocument extends Document {
             rel="stylesheet"
           />
         </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
       </Html>
     );
   }

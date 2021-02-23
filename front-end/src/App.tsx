@@ -1,8 +1,12 @@
+import { ExperienceBar } from './components/ExperienceBar';
+
 import './styles/global.css';
 
 function App() {
   return (
-    <button style={{ height: '3rem' }}>test</button>
+    <div className="container">
+      <ExperienceBar />
+    </div>
   );
 }
 

@@ -2,7 +2,7 @@ import './styles/global.css';
 
 function App() {
   return (
-    <h1>Hello</h1>
+    <button style={{ height: '3rem' }}>test</button>
   );
 }
 

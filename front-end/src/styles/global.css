@@ -4,13 +4,49 @@
   box-sizing: border-box;
 }
 
-body {
-  background: #F2F3F5;
-  color: #666;
+:root {
+  --white: #FFF;
+  --background: #F2F3F5;
+  --gray-line: #DCDDE0;
+  --text: #666666;
+  --text-highlight: #B3B9FF;
+  --title: #2E384D;
+  --red: #E83F5B;
+  --green: #4CD62B;
+  --blue: #5965E0;
+  --blue-dark: #4953B8;
+  --blue-twitter: #2AA9E0;
 }
 
+/* 
+  isso esta sendo feito para que os tamanhos da aplicação vão se portar de 
+  uma maneira global, quando aumentar as fontes vai ser aumentado também todo
+  o resto ou diminuir
+*/
+/* quando eu tiver uma tela menor que 1080px */
+@media(max-width: 1080px) {
+  html {
+    /* 16px vezes 0,9375 é igual a 15px */
+    font-size: 93.75%;
+  }
+}
+
+@media(max-width: 720px) {
+  html {
+    /* 16px vezes 0,875 é igual a 14px */
+    font-size: 87.5%;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--text);
+}
+
+/* cada 1rem equivale ao tamanho do font-size do corpo da aplicação(16px) */
+
 body, input, textarea, button {
-  font: 400 16px "Inter", sans-serif;
+  font: 400 1rem "Inter", sans-serif;
 }
 
 button {

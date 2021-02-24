@@ -2,12 +2,15 @@ import { useState, useEffect } from 'react';
 
 import styles from '../styles/components/Countdown.module.css';
 
+let countdownTimeout: NodeJS.Timeout;
+
 export function Countdown() {
   // 25 * 60 representa 25 minutos em segundos
   const [time, setTime] = useState(25 * 60);
   // o active vai armazenar se o countdown esta ativo ou pausado e pausado é
   // como ele inicia
-  const [active, setActive] = useState(false);
+  const [isActive, setIsActive] = useState(false);
+  const [hasFinished, setHasFinished] = useState(false);
 
   // fazendo time / 60 vai fazer com que eu tenha o número em minutos e o
   // Math.floor vai arredondar o número para baxio, ou seja, quando eu tiver
@@ -30,7 +33,17 @@ export function Countdown() {
   const [secondLeft, secondRight] = String(seconds).padStart(2, '0').split('');
 
   function startCountdown() {
-    setActive(true);
+    setIsActive(true);
+  };
+
+  function resetCountdown() {
+    // clearTimeout(countdownTimeout) => eu estou cancelando a execução do
+    // timeout porque mesmo colocando o isActive como false ele ainda vai
+    // executar o timeout
+    clearTimeout(countdownTimeout);
+    setIsActive(false);
+    // voltanto o time para o valor inicial para voltar para 25 minutos
+    setTime(25 * 60);
   };
 
   // o useEffect é um Hook, uma função para disparar efeitos colaterais.
@@ -43,15 +56,18 @@ export function Countdown() {
   // para ele diminuir o tempo do count
   useEffect(() => {
     // se o active estiver true e o time for maior que 0
-    if (active && time > 0) {
+    if (isActive && time > 0) {
       // setTimeout quer dizer que eu quero executar algo depois de um tempo
       // nesse caso eu vou executar uma função depois de 1 segundo
-      setTimeout(() => {
+      countdownTimeout = setTimeout(() => {
         // depois de 1 segundo eu vou reduzir o time para 1 segundo
         setTime(time - 1);
       }, 1000);
+    } else if (isActive && time === 0) {
+      setHasFinished(true);
+      setIsActive(false);
     }
-  }, [active, time]);
+  }, [isActive, time]);
 
   return (
     <div>
@@ -69,13 +85,34 @@ export function Countdown() {
         </div>
       </div>
 
-      <button 
-        type="button" 
-        className={styles.countdownButton}
-        onClick={startCountdown}
-      >
-        Iniciar um ciclo
-      </button>
+      { hasFinished ? (
+        <button
+          disabled
+          className={styles.countdownButton}
+        >
+          Ciclo encerrado
+        </button>
+      ) : (
+        <>
+          { isActive ? (
+            <button
+              type="button"
+              className={`${styles.countdownButton} ${styles.countdownButtonActive}`}
+              onClick={resetCountdown}
+            >
+              Abandonar ciclo
+            </button>
+          ) : (
+            <button 
+              type="button" 
+              className={styles.countdownButton}
+              onClick={startCountdown}
+            >
+              Iniciar um ciclo
+            </button>
+          ) }
+        </>
+      )}
     </div>
   );
 };

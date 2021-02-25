@@ -1,10 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { ChanllengesContext } from '../contexts/ChanllengesContext';
 
 import styles from '../styles/components/Countdown.module.css';
 
 let countdownTimeout: NodeJS.Timeout;
 
 export function Countdown() {
+  const { startNewChanllenge } = useContext(ChanllengesContext);
+
   // 25 * 60 representa 25 minutos em segundos
   const [time, setTime] = useState(25 * 60);
   // o active vai armazenar se o countdown esta ativo ou pausado e pausado é
@@ -66,6 +69,7 @@ export function Countdown() {
     } else if (isActive && time === 0) {
       setHasFinished(true);
       setIsActive(false);
+      startNewChanllenge();
     }
   }, [isActive, time]);
 

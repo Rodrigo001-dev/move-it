@@ -1,5 +1,5 @@
 .container {
-  height: 100vh;
+  height: 100%;
   max-width: 992px;
 
   margin: 0 auto;
@@ -11,6 +11,8 @@
 }
 
 .container section {
+  margin-top: 6rem;
+  
   flex: 1;
 
   display: grid;

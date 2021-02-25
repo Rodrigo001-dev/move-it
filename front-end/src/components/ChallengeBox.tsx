@@ -1,24 +1,28 @@
+import { useContext } from 'react';
+import { ChanllengesContext } from '../contexts/ChanllengesContext';
+
 import styles from '../styles/components/ChanllengeBox.module.css';
 
 export function ChanllengeBox() {
-  const hasActiveChanllenge = true;
+  const { activeChanllenge, resetChanllenge } = useContext(ChanllengesContext);
   
   return (
     <div className={styles.chanllengeBoxContainer}>
-      { hasActiveChanllenge ? (
+      { activeChanllenge ? (
         <div className={styles.chanllengeActive}>
-          <header>Ganhe 400 xp</header>
+          <header>Ganhe {activeChanllenge.amount} xp</header>
 
           <main>
-            <img src="icons/body.svg" />
+            <img src={`icons/${activeChanllenge.type}.svg`} />
             <strong>Nodo desafio</strong>
-            <p>Levante e faça uma caminhada de 3 minutos.</p>
+            <p>{activeChanllenge.description}</p>
           </main>
 
           <footer>
             <button 
               type="button"
               className={styles.chanllengeFailedButton}
+              onClick={resetChanllenge}
             >
               Falhei
             </button>

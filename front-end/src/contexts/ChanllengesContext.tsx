@@ -1,4 +1,4 @@
-import { createContext, useState, ReactNode } from 'react';
+import { createContext, useState, ReactNode, useEffect } from 'react';
 import chanllenges from '../../challenges.json';
 
 // o contexto é utilizado para passar informações de um componente para outro
@@ -42,6 +42,10 @@ export function ChanllengesProvider({ children }: ChanllengesProviderProps) {
   // level vezes 4, o quetro é o fator de experiência que pode aumentar ou 
   // diminuir basiado se vai deixar mais difícil ou mais facíl
   const experienceToNextLevel = Math.pow((level + 1) * 4, 2);
+
+  // quando passa um array vazio no useEffect ele vai executar a função uma 
+  // unica vez quando o componente for exibido em tela
+  useEffect(() => {}, []);
 
   function levelUp() {
     setLevel(level + 1)

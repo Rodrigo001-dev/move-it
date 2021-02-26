@@ -20,6 +20,7 @@ interface ChanllengesContextData {
   levelUp: () => void;
   startNewChanllenge: () => void;
   resetChanllenge: () => void;
+  completeChanllenge: () => void;
 };
 
 interface ChanllengesProviderProps {
@@ -64,6 +65,37 @@ export function ChanllengesProvider({ children }: ChanllengesProviderProps) {
     setActiveChanllenge(null);
   };
 
+  function completeChanllenge() {
+    // essa função não pode ser chamada se o usuário se o usuário não tiver com
+    // um chanllenge ativo por isso está fazendo a validação se não está com 
+    // chanllenge ativo então retorne nada
+    if (!activeChanllenge) {
+      return;
+    }
+
+    // estou pegando a quantidade de experiência que o desafio dá
+    const { amount } = activeChanllenge;
+
+    // estou somando a experiência atual do usuário com o valor de experiência
+    // que o desafio dá
+    let finalExperience = currentExperience + amount;
+
+    // se o valor final de experiência for maior ou igual a experiência que o 
+    // usuário precisa para passar de level, eu vou upar o usuáriode
+    // level(levelUp()) e vou falar que a experiência final do usuário é igual
+    // ao total que ele ficou no final menos a quantidade de experiência que ele
+    // precisava para passar de level
+    if (finalExperience >= experienceToNextLevel) {
+      finalExperience = finalExperience - experienceToNextLevel;
+      levelUp();
+    }
+
+    setCurrentExperience(finalExperience);
+    setActiveChanllenge(null);
+    // atualizando o numero de desafios completados
+    setChanllengesCompleted(chanllengesCompleted + 1);
+  };
+
   return (
     // o  ChanllengesContext.Provider vai fazer com que todos os elementos
     // dentro do provider vão ter acesso aos dados daquele contexto, todos os
@@ -81,7 +113,8 @@ export function ChanllengesProvider({ children }: ChanllengesProviderProps) {
         activeChanllenge,
         levelUp,
         startNewChanllenge,
-        resetChanllenge
+        resetChanllenge,
+        completeChanllenge
       }}
     >
       {children}

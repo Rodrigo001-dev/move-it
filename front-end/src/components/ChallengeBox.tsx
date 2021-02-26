@@ -4,7 +4,11 @@ import { ChanllengesContext } from '../contexts/ChanllengesContext';
 import styles from '../styles/components/ChanllengeBox.module.css';
 
 export function ChanllengeBox() {
-  const { activeChanllenge, resetChanllenge } = useContext(ChanllengesContext);
+  const { 
+    activeChanllenge, 
+    resetChanllenge, 
+    completeChanllenge 
+  } = useContext(ChanllengesContext);
   
   return (
     <div className={styles.chanllengeBoxContainer}>
@@ -29,6 +33,7 @@ export function ChanllengeBox() {
             <button 
               type="button"
               className={styles.chanllengeSucceededButton}
+              onClick={completeChanllenge}
             >
               Completei
             </button>

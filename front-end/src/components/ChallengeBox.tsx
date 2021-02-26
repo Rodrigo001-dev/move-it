@@ -1,38 +1,38 @@
 import { useContext } from 'react';
-import { ChanllengesContext } from '../contexts/ChanllengesContext';
+import { ChallengesContext } from '../contexts/ChallengesContext';
 import { CountdownContext } from '../contexts/CountdownContext';
 
 import styles from '../styles/components/ChanllengeBox.module.css';
 
 export function ChanllengeBox() {
   const { 
-    activeChanllenge, 
-    resetChanllenge, 
-    completeChanllenge 
-  } = useContext(ChanllengesContext);
+    activeChallenge, 
+    resetChallenge, 
+    completeChallenge 
+  } = useContext(ChallengesContext);
 
   const { resetCountdown } = useContext(CountdownContext);
 
   function handleChallengeSucceeded() {
-    completeChanllenge();
+    completeChallenge();
     resetCountdown();
   };
 
   function handleChallengeFailed() {
-    resetChanllenge();
+    resetChallenge();
     resetCountdown();
   };
   
   return (
     <div className={styles.chanllengeBoxContainer}>
-      { activeChanllenge ? (
+      { activeChallenge ? (
         <div className={styles.chanllengeActive}>
-          <header>Ganhe {activeChanllenge.amount} xp</header>
+          <header>Ganhe {activeChallenge.amount} xp</header>
 
           <main>
-            <img src={`icons/${activeChanllenge.type}.svg`} />
+            <img src={`icons/${activeChallenge.type}.svg`} />
             <strong>Nodo desafio</strong>
-            <p>{activeChanllenge.description}</p>
+            <p>{activeChallenge.description}</p>
           </main>
 
           <footer>

@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext, useState, useEffect } from 'react';
 
-import { ChanllengesContext } from './ChanllengesContext';
+import { ChallengesContext } from './ChallengesContext';
 
 interface CountdownContextData {
   minutes: number;
@@ -20,7 +20,7 @@ export const CountdownContext = createContext({} as CountdownContextData);
 let countdownTimeout: NodeJS.Timeout;
 
 export function CountdownProvider({ children }: CountdownProviderProps) {
-  const { startNewChanllenge } = useContext(ChanllengesContext);
+  const { startNewChallenge } = useContext(ChallengesContext);
 
   // 25 * 60 representa 25 minutos em segundos
   const [time, setTime] = useState(25 * 60);
@@ -73,7 +73,7 @@ export function CountdownProvider({ children }: CountdownProviderProps) {
     } else if (isActive && time === 0) {
       setHasFinished(true);
       setIsActive(false);
-      startNewChanllenge();
+      startNewChallenge();
     }
   }, [isActive, time]);
   

@@ -1,6 +1,8 @@
 import { createContext, useState, ReactNode, useEffect } from 'react';
 import Cookies from 'js-cookie';
+
 import challenges from '../../challenges.json';
+import { LevelUpModal } from '../components/LevelUpModal';
 
 // o contexto é utilizado para passar informações de um componente para outro
 // nesse caso estou utilizando o Context API do React.
@@ -22,6 +24,7 @@ interface ChallengesContextData {
   startNewChallenge: () => void;
   resetChallenge: () => void;
   completeChallenge: () => void;
+  closeLevelUpModal: () => void;
 };
 
 interface ChallengesProviderProps {
@@ -44,6 +47,7 @@ export function ChallengesProvider({ children, ...rest }: ChallengesProviderProp
   const [challengesCompleted, setChallengesCompleted] = useState(rest.challengesCompleted ?? 0);
 
   const [activeChallenge, setActiveChallenge] = useState(null);
+  const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
 
   // o math.pow vai fazer um calculo em potência.
   // vai ser um calculo na potência 2 e level + 1 porque eu queor saber o proximo
@@ -72,7 +76,12 @@ export function ChallengesProvider({ children, ...rest }: ChallengesProviderProp
   }, [level, currentExperience, challengesCompleted]);
 
   function levelUp() {
-    setLevel(level + 1)
+    setLevel(level + 1);
+    setIsLevelUpModalOpen(true);
+  };
+
+  function closeLevelUpModal() {
+    setIsLevelUpModalOpen(false);
   };
 
   function startNewChallenge() {
@@ -152,10 +161,14 @@ export function ChallengesProvider({ children, ...rest }: ChallengesProviderProp
         levelUp,
         startNewChallenge,
         resetChallenge,
-        completeChallenge
+        completeChallenge,
+        closeLevelUpModal
       }}
     >
       {children}
+
+      {/* se o isLevelUpModalOpen for true eu vou mostrar o <LevelUpModal /> */}
+      { isLevelUpModalOpen && <LevelUpModal /> }
     </ChallengesContext.Provider>
   );
 };

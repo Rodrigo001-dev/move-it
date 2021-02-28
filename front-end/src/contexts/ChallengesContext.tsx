@@ -1,4 +1,5 @@
 import { createContext, useState, ReactNode, useEffect } from 'react';
+import Cookies from 'js-cookie';
 import challenges from '../../challenges.json';
 
 // o contexto é utilizado para passar informações de um componente para outro
@@ -49,6 +50,19 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
     // pedeindo permissão para mostrar notificações
     Notification.requestPermission();
   }, []);
+
+  useEffect(() => {
+    // estou salvando o level dentro dos cookies e como ele só aceita String e o
+    // level é um Number eu estou convertendo ele para String
+    Cookies.set('level', String(level));
+    //salvando a experiência atual do usuário nos cookies
+    Cookies.set('currentExperience', String(currentExperience));
+    // salvando os desafios concluidos do usuário nos cookies
+    Cookies.set('challengesCompleted', String(challengesCompleted));
+    // eu estou colocando essas três informações no array de dependências do 
+    // useEffect porque eu quero disparar uma função assim que esses valores
+    // mudarem e salvar eles no cookies
+  }, [level, currentExperience, challengesCompleted]);
 
   function levelUp() {
     setLevel(level + 1)

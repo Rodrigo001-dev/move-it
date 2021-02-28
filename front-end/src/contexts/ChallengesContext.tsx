@@ -27,14 +27,21 @@ interface ChallengesContextData {
 interface ChallengesProviderProps {
   // o ReactNode vai aceitar qualquer elemento filho como children
   children: ReactNode;
+  level: number;
+  currentExperience: number;
+  challengesCompleted: number;
 };
 
 export const ChallengesContext = createContext({} as ChallengesContextData);
 
-export function ChallengesProvider({ children }: ChallengesProviderProps) {
-  const [level, setLevel] = useState(1);
-  const [currentExperience, setCurrentExperience] = useState(0);
-  const [challengesCompleted, setChallengesCompleted] = useState(0);
+// o ...rest serve para pegar todas as outras informações(level, 
+// currentExperience e challengesCompleted)
+export function ChallengesProvider({ children, ...rest }: ChallengesProviderProps) {
+  // aqui eu estou falando que o valor inicial do level vai ser o level que esta
+  // vindo dos cookies e se não existir vai ser 1
+  const [level, setLevel] = useState(rest.level ?? 1);
+  const [currentExperience, setCurrentExperience] = useState(rest.currentExperience ?? 0);
+  const [challengesCompleted, setChallengesCompleted] = useState(rest.challengesCompleted ?? 0);
 
   const [activeChallenge, setActiveChallenge] = useState(null);
 

@@ -26,3 +26,13 @@
   */
   align-content: center; 
 }
+
+@media (max-width: 980px) {
+  .container {
+    width: 95%;
+    margin-bottom: 350px;
+  }
+  .container section {
+    grid-template-columns: 1fr;
+  }
+}

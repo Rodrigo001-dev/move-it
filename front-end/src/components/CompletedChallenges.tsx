@@ -3,7 +3,7 @@ import { ChallengesContext } from '../contexts/ChallengesContext';
 
 import styles from '../styles/components/CompletedChanllenges.module.css';
 
-export function CompletedChanllenges() {
+export function CompletedChallenges() {
   const { challengesCompleted } = useContext(ChallengesContext);
 
   return (

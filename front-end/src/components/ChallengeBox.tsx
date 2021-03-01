@@ -4,7 +4,7 @@ import { CountdownContext } from '../contexts/CountdownContext';
 
 import styles from '../styles/components/ChanllengeBox.module.css';
 
-export function ChanllengeBox() {
+export function ChallengeBox() {
   const { 
     activeChallenge, 
     resetChallenge, 
